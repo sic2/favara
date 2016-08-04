@@ -7,6 +7,8 @@ A geo-restricted aggregator of FB events
 
 The main goal of **sciabaca** is to aggregate community events happening within a given geographical region, categorize them, and allow users to explore and find events via a webapp.
 
+**sciabaca** will also provide a RESTful API.
+
 ## How to run
 
 First of all, make sure that you have ruby installed. Then install all required dependencies
