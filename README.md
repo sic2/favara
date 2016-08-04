@@ -10,13 +10,13 @@ The main goal of **sciabaca** is to aggregate community events happening within 
 ## How to run
 
 First of all, make sure that you have ruby installed. Then install all required dependencies
-> $ cd webapp
-> $ bundle install
+```
+$ cd webapp
+$ bundle install
+```
 
 And finally just run **sciabaca**:
-> $ cd webapp
-> $ ruby sciabaca.rb
+```
+$ ruby sciabaca.rb
+```
 
-## Notes
-
-This could be considered a sister-project of **isamuni**.
