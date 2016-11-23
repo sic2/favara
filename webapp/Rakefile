@@ -1,0 +1,6 @@
+require './database'
+
+load 'crawl.rake'
+
+task :environment do
+end

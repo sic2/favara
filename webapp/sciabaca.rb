@@ -1,6 +1,8 @@
 require 'sinatra'
+require "sinatra/json"
 
-get '/' do
-  erb :index
+require './database'
+
+get '/events' do
+  json Event.all
 end
-
