@@ -1,24 +1,31 @@
-# sciabaca
-A geo-restricted aggregator of FB events
+# Favara
+A very simple and easy to use FB crawler for pages and groups
 
-**sciabaca** (or sciàbaca or sciabachèju) is an **Siculo-Arabic** word meaning: fishing net. The Siculo-Arabic language is dead now (IX-XIV century), but we believe it sounds great and its meaning really reflects the purpose of the project.
+**favara** is a Siculo-Arabic word meaning: water source. The Siculo-Arabic language is dead now (IX-XIV century), but we believe the word *favara* sounds great and its meaning really reflects the purpose of the project.
 
-## Goals
+## What is does:
+- crawls posts and events from a several sources, inserting them into a database
 
-The main goal of **sciabaca** is to aggregate community events happening within a given geographical region, categorize them, and allow users to explore and find events via a webapp.
+## Supported sources:
+- only facebook at the moment
 
-**sciabaca** will also provide a RESTful API.
+## How to use
+```bash
+$ # install ruby
+$ # clone this repo
 
-## How to run
+$ bundle install # install dependencies
 
-First of all, make sure that you have ruby installed. Then install all required dependencies
+$ vim database.yml # configure your database
+$ vim config.yml # configure your sources
+
+# create the needed tables in your database
+# Note, you can also create the tables using any other mean, or ship your table layout, just ignore this step and customize the models in the models folder
+$ rake create_tables
+
+# crawl all the things! (one time)
+$ rake "crawl[true]"
+
+# or run periodically
+$ clockwork clock.rb
 ```
-$ cd webapp
-$ bundle install
-```
-
-And finally just run **sciabaca**:
-```
-$ ruby sciabaca.rb
-```
-
