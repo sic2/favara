@@ -1,7 +1,7 @@
 require 'sinatra'
-require "sinatra/json"
+require 'sinatra/json'
 
-require './database'
+require './db/database'
 
 get '/events' do
   json Event.all
