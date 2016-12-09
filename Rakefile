@@ -4,7 +4,7 @@ end
 
 load './crawlers/facebook.rake'
 
-task :crawl, [:complete] => [:crawl_fb] do
+task :favara, [:complete] => [:crawl_fb] do
 end
 
 task :create_tables do

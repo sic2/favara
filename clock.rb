@@ -7,14 +7,14 @@ end
 
 module Clockwork
   handler do |job, _time|
-    if job == 'crawl'
+    if job == 'favara'
       if night?
-        system 'rake crawl[true]'
+        system 'rake favara[true]'
       else
-        system 'rake crawl[false]'
+        system 'rake favara[false]'
       end
     end
   end
 
-  every(15.minutes, 'crawl')
+  every(15.minutes, 'favara')
 end
