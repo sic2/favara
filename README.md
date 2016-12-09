@@ -29,3 +29,9 @@ $ rake "crawl[true]"
 # or run periodically
 $ clockwork clock.rb
 ```
+
+## Integrating with rails-managed database
+generate a new migration and copy the contents of `migrations/001_init.rb` inside of it. Then run `rake db:migrate` in your rails app. (NOTE: this will assume no tables with the same name already exist)
+
+## Making a completely custom crawler
+feel free to copy the files in `crawlers/lib/*` and use them as libraries
