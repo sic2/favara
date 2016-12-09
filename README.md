@@ -37,7 +37,7 @@ Run a cron job on favara via clockwork
 $ clockwork clock.rb
 ```
 
-Note that our clockwork configuration runs full crawling operations only between 11pm and 5am.
+**NOTE**: Our clockwork configuration runs full crawling operations only between 11pm and 5am.
 
 ## Integrating favara with a rails managed database
 Generate a new empty migration and copy the contents of `migrations/001_init.rb` inside it.
@@ -48,7 +48,7 @@ Then run `rake db:migrate` in your rails app.
 ## Make a custom crawler
 Well, feel free to copy the files in `crawlers/lib/*` and use them as standard ruby libraries
 
-### Basic testing
+## Basic testing
 
 We also provide a very thin Sinatra webservice. This is not supposed to be used in production.
 You could, however, use the Sinatra server to test that your *favara* instance is working correctly.
