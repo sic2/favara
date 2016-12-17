@@ -3,7 +3,7 @@ A simple and easy to use crawler for web sources (fb, twitter, nodebb, etc)
 
 **favara** is a Siculo-Arabic word meaning: water source. The Siculo-Arabic language is dead now (IX-XIV century), but we believe the word *favara* sounds great and its meaning really reflects the purpose of the project.
 
-## What is does:
+## What it does:
 - crawls posts and events from several sources, inserting them into a database
 
 ## Supported sources:
@@ -13,9 +13,10 @@ A simple and easy to use crawler for web sources (fb, twitter, nodebb, etc)
 
 ### Requirements
 
-- Ruby
+- A recent version of ruby and rubygems installed.
+- A Postgres database, where Favara will put the crawled data.
 
-### Basic Usage
+### Installing
 
 - Clone this repo
 - Install any dependencies via `$ bundle install`
@@ -28,42 +29,32 @@ A simple and easy to use crawler for web sources (fb, twitter, nodebb, etc)
   - FAVARA_DB_HOST
   - FAVARA_DB_DATABASE
 - Configure the sources - `config.yml`
-- Create the needed tables in your database via `rake create_tables`.
-     Note, you can also create the tables using any other mean, or ship your table layout,
-     just ignore this step and customize the models in the models folder
-- Run favara with `rake favara`
 
-By default, favara will not crawl all the content at the specified sources.
-If you want to crawl all data, you will have explicitly state that by running: `rake favara[true]`
+You will then have to make a choice regarding the ownership of the database tables favara uses:
 
-### Advanced Usage
+#### I want favara to put its contents into some existing tables
+- If you want to run Favara with isamuni, then let isamuni create the tables for you, no other configuration is required.
+- You can edit the models in the models folder to reflect your tables' structure.
 
-Run a cron job on favara via clockwork
+#### I want favara to create and manage its tables
+- You can ask favara to create the required tables via `rake create_tables`.
+- If you run a rails app, you can generate a new migration and then copy the contents of  `migrations/001_init.rb` inside of it.
+- You also manually create the required tables by yourself referring to `migrations/001_init.rb`.
+ 
+### Running
 
-```bash
-$ clockwork clock.rb
-```
-
-**NOTE**: Our clockwork configuration runs full crawling operations only between 11pm and 5am.
-
-## Integrating favara with a rails managed database
-Generate a new empty migration and copy the contents of `migrations/001_init.rb` inside it.
-Then run `rake db:migrate` in your rails app.
-
-**NOTE**: this will assume no tables with the same name already exist
+- Run favara issuing `rake favara` to crawl only the latest contents
+- Run `rake "favara[true]` to crawl all posts from all sources
+- Run `clockwork clock.rb` to leave favara running, and automatically crawl the latest posts at regular intervals (the default configurtation runs a complete crawling between 11pm and 5am).
 
 ## Make a custom crawler
-Well, feel free to copy the files in `crawlers/lib/*` and use them as standard ruby libraries
+Favara is designed to import the crawled contents into a database. If that doesn't suit your needs, feel free to copy the files in `crawlers/lib/*` containing the database-independent logic and use them as any other ruby library.
 
 ## Basic testing
 
-We also provide a very thin Sinatra webservice. This is not supposed to be used in production.
-You could, however, use the Sinatra server to test that your *favara* instance is working correctly.
+We also provide a very thin Sinatra webservice. This is not supposed to be used in production, but it may come in handy for testing or diagnostic. To run it, simply run `ruby server.rb`, then point your browser to *localhost:4567*.
 
-Run `ruby server.rb`
-
-Then open your browser to *localhost:4567*
-You can check events under */events* and posts under */posts*
+You can check the crawled events under */events* and posts under */posts*
 
 ## Use cases
 
