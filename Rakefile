@@ -7,12 +7,12 @@ load './crawlers/facebook.rake'
 task :favara, [:complete] => [:crawl_fb] do
 end
 
-task :create_tables do
-  require 'db/migrations/001_init.rb'
+task :create_tables => [:environment] do
+  require './db/migrations/001_init.rb'
   AddCrawlerTables.new.migrate(:up)
 end
 
-task :destroy_tables do
-  require 'db/migrations/001_init.rb'
+task :destroy_tables => [:environment] do
+  require './db/migrations/001_init.rb'
   AddCrawlerTables.new.migrate(:down)
 end
