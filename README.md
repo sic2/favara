@@ -44,7 +44,7 @@ You will then have to make a choice regarding the ownership of the database tabl
 ### Running
 
 - Run favara issuing `rake favara` to crawl only the latest contents
-- Run `rake "favara[true]` to crawl all posts from all sources
+- Run `rake "favara[true]"` to crawl all posts from all sources
 - Run `clockwork clock.rb` to leave favara running, and automatically crawl the latest posts at regular intervals (the default configurtation runs a complete crawling between 11pm and 5am).
 
 ## Make a custom crawler
