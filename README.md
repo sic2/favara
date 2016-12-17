@@ -19,7 +19,14 @@ A simple and easy to use crawler for web sources (fb, twitter, nodebb, etc)
 
 - Clone this repo
 - Install any dependencies via `$ bundle install`
-- Configure the database - `database.yml`
+- Configure the database - you can override the settings in `database.yml` using the following env variables
+  - FAVARA_DB_ADAPTER
+  - FAVARA_DB_ENCODING
+  - FAVARA_DB_POOL
+  - FAVARA_DB_USERNAME
+  - FAVARA_DB_PASSWORD
+  - FAVARA_DB_HOST
+  - FAVARA_DB_DATABASE
 - Configure the sources - `config.yml`
 - Create the needed tables in your database via `rake create_tables`.
      Note, you can also create the tables using any other mean, or ship your table layout,
