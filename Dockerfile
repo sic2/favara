@@ -15,4 +15,4 @@ RUN bundle install
 # copying in the rest of the application
 COPY . .
 
-CMD ["rake", "crawl[true]"]
+CMD ["rake", "favara[true]"]
