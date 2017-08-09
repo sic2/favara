@@ -3,5 +3,5 @@ encoding: unicode
 pool: 5
 username: isamuni
 password: isamuni
-host: localhost
-database: isamuni_dev
+host: 127.0.0.1
+database: isamuni
