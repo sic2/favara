@@ -12,6 +12,26 @@ fb:
       name: StartupItalia! Sicilia
       post: true
       event: true
+    - id: 387521611296593
+      name: Sviluppatori Software Siciliani
+      post: true
+      event: true
+    - id: 207959762737919
+      name: pa/working
+      post: true
+      event: true
+    - id: 424979764287351
+      name: Open Data Sicilia
+      post: true
+      event: true
+    - id: 454645481297154
+      name: TIM #WCAP Catania
+      post: true
+      event: true
+    - id: 141397699262058
+      name: Italian Startup Scene Sicily
+      post: true
+      event: true
   pages:
     - id: 116505148430596
       name: YoutHub
