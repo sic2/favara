@@ -80,12 +80,14 @@ def fb_crawling(app_id, app_secret, feed_limit)
   Source.where(stype: 'page').each do |source|
     page_events = crawler.page_events(source.uid)
     n_events = 0
-    
-    if crawler.event? element
-      e = Event.from_fb_event(element)
-      e.source = source
-      e.save!
-      n_events = n_events + 1
+
+    page_events.each do |element|
+      if crawler.event? element
+        e = Event.from_fb_event(element)
+        e.source = source
+        e.save!
+        n_events = n_events + 1
+      end
     end
 
     log "page #{source.name}: inserted/updated #{n_events} events"    

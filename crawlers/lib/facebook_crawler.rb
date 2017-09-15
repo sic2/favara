@@ -18,8 +18,8 @@ class FacebookCrawler
   Page_fields = %w(id name).freeze
   DEFAULT_PAGE_SIZE = 50
 
-  def self.getToken(app_id, app_secret)
-    unless (app_id and app_secret) raise 'either a token or app_id and app_secret should be defined'
+  def get_token(app_id, app_secret)
+    raise 'either a token or app_id and app_secret should be defined' unless app_id and app_secret
     oauth = Koala::Facebook::OAuth.new(app_id, app_secret, '')
     oauth.get_app_access_token
   end
@@ -33,7 +33,7 @@ class FacebookCrawler
     @logger = options[:logger] || Logger.new(STDERR)
     Koala::Utils.logger = @logger
   
-    token = options[:token] || getToken(options[:app_id],options[:app_secret])
+    token = options[:token] || get_token(options[:app_id],options[:app_secret])
     @graph = Koala::Facebook::API.new(token)
     @page_size = options[:page_size] || DEFAULT_PAGE_SIZE
   end
@@ -74,16 +74,16 @@ class FacebookCrawler
     end
   end
 
-  def self.post?(element)
-    %w(status link photo event).include? fe['type']
+  def post?(element)
+    %w(status link photo event).include? element['type']
   end
 
-  def self.event?(element)
-    fe['type'] == 'event' 
+  def event?(element)
+    element['type'] == 'event' 
   end
 
   def event_info_from_feed_element(element)
-    event_id = event['link'][/events\/(.?)*\//][7..-2]
+    event_id = element['link'][/events\/(.?)*\//][7..-2]
     event_info(event_id)
   end
 
