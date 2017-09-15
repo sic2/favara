@@ -46,59 +46,50 @@ def fb_crawling(app_id, app_secret, feed_limit)
   end
 
   log 'crawling group feed'
-  FB_groups_to_track.each do |group|
-    source = Source.find_by uid: group['id'], stype: 'group'
-
+  Source.where(stype: 'group').each do |source|
     next unless source.isOPEN
-    log "downloading feed for group: #{group['name']}"
-    result_pages = crawler.group_feed(group['id'], feed_limit)
+    
+    log "downloading feed for group: #{source.name}"
 
-    result_pages.each do |feed|
-      insert_events(feed[:events], source)
-      insert_posts(feed[:posts], source)
+    n_posts = 0
+    n_events = 0
+
+    feed = crawler.group_feed(source.uid, feed_limit)
+
+    feed.each do |element|
+      if crawler.post? element
+        post = Post.from_fb_post(element)
+        post.source = source
+        post.save!
+        n_posts = n_posts + 1
+      end
+
+      if crawler.event? element
+        einfo = crawler.event_info_from_feed_element(element)
+        e = Event.from_fb_event(einfo)
+        e.source = source
+        e.save!
+        n_events = n_events + 1
+      end
     end
+
+    log "group #{source.name}: inserted/updated #{n_posts} posts, #{n_events} events"
   end
 
-  log 'crawling page feed'
-  FB_pages_to_track.each do |page|
-    source = Source.find_by uid: page['id'], stype: 'page'
-    page_events = crawler.page_events(page['id'])
-    insert_events(page_events, source)
+  log 'crawling pages feed'
+  Source.where(stype: 'page').each do |source|
+    page_events = crawler.page_events(source.uid)
+    n_events = 0
+    
+    if crawler.event? element
+      e = Event.from_fb_event(element)
+      e.source = source
+      e.save!
+      n_events = n_events + 1
+    end
+
+    log "page #{source.name}: inserted/updated #{n_events} events"    
   end
-end
-
-def insert_events(events, source = nil, skip_existing = false)
-  log "crawled #{events.count} events, inserting them into db"
-
-  if skip_existing
-    event_uids_in_db = Event.pluck(:uid).to_set
-    events = events.reject { |e| event_uids_in_db.include? e['id'] }
-  end
-
-  events.each do |event_data|
-    e = Event.from_fb_event(event_data)
-    e.source = source
-    e.save
-  end
-
-  log "inserted/updated #{events.count} events"
-end
-
-def insert_posts(posts, source = nil, skip_existing = false)
-  log "crawled #{posts.count} posts"
-
-  if skip_existing
-    post_uids_in_db = Post.pluck(:uid).to_set
-    posts = posts.reject { |post| post_uids_in_db.include? post['id'] }
-  end
-
-  posts.each do |post_data|
-    post = Post.from_fb_post(post_data)
-    post.source = source
-    post.save
-  end
-
-  log "inserted/updated #{posts.count} posts"
 end
 
 def log(message)
